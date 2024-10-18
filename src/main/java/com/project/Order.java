@@ -3,12 +3,12 @@ package com.project;
 import java.time.LocalDate;
 
 public class Order {
-    private Long orderId;
-    private String customerName;
-    private LocalDate orderDate;
-    private OrderStatus orderStatus; //"처리 중, 배송 중, 완료"
+    private final Long orderId;
+    private final String customerName;
+    private final String orderDate;
+    private final String orderStatus; //"처리 중, 배송 중, 완료"
 
-    public Order(Long orderId, String customerName, LocalDate orderDate, OrderStatus orderStatus) {
+    public Order(Long orderId, String customerName, String orderDate, String orderStatus) {
         this.orderId = orderId;
         this.customerName = customerName;
         this.orderDate = orderDate;
@@ -22,14 +22,10 @@ public class Order {
     public String getCustomerName() {
         return customerName;
     }
-    public LocalDate getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
-    public OrderStatus getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
-    }
-
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
     }
 }

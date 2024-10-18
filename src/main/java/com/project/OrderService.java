@@ -1,21 +1,25 @@
 package com.project;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class OrderService {
-    private final OrderRepository orderRepository;
-    private final OrderProcessInterface orderProcessInterface;
+    private static final String API_URL = Config.getProperty("external.api.url.test1"); // 외부 API URL
 
-    public OrderService(OrderRepository orderRepository, OrderProcessInterface orderProcessInterface) {
+    private final OrderRepository orderRepository;
+    private final OrderProcessInterface<Order> orderProcessInterface;
+
+    public OrderService(OrderRepository orderRepository, OrderProcessInterface<Order> orderProcessInterface) {
         this.orderRepository = orderRepository;
         this.orderProcessInterface = orderProcessInterface;
     }
 
-    public void syncOrdersFromExternal() {
+    public void fetchOrdersFromExternal() {
         try {
-            orderProcessInterface.fetchOrders();
+            orderProcessInterface.fetchOrders(API_URL);
         } catch (Exception e) {
-            System.err.println("Error syncing orders: " + e.getMessage());
+            Logger.getLogger("OrderService").info("Error fetching orders: " + e.getMessage());
         }
     }
 
@@ -30,9 +34,9 @@ public class OrderService {
     public void sendOrdersToExternal() {
         try {
             List<Order> orders = orderRepository.getAllOrders();
-            orderProcessInterface.sendOrders(orders);
+            orderProcessInterface.sendOrders(orders, API_URL);
         } catch (Exception e) {
-            System.err.println("Error sending orders: " + e.getMessage());
+            Logger.getLogger("OrderService").info("Error sending orders: " + e.getMessage());
         }
     }
 }
