@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e5b631f-c39b-480d-85d3-12cc999b5cf3" name="Changes" comment="new. 단위테스트 및 통합 테스트 추가, 외부 시스템 변경에 대한 유연성 대처 추가 (properties)&#10;update. interface 로직 변경 및 default method 구현, interface 구현체 구현, checked exception에 대한 해결(재시도) 추가 및 checked &amp; unchecked exception에 대해 로깅&#10;TODO : default method 간소화 및 fetch method를 default method 로 구현">
+    <list default="true" id="6e5b631f-c39b-480d-85d3-12cc999b5cf3" name="Changes" comment="update. default method 간소화 및 fetch method를 default method로 구현, 에러핸들링 통합, 인터페이스 및 구현체 리팩토링&#10;TODO: 클래스 다이어그램 등 README 업데이트">
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/ExternalSystemOrderApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/ExternalSystemOrderApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/OrderProcessInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/OrderProcessInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ExternalOrderApiTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ExternalOrderApiTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/OrderServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/OrderServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -153,7 +153,7 @@
       <updated>1729143841211</updated>
       <workItem from="1729143842437" duration="7455000" />
       <workItem from="1729226875672" duration="16760000" />
-      <workItem from="1729287399586" duration="10009000" />
+      <workItem from="1729287399586" duration="12175000" />
     </task>
     <task id="LOCAL-00001" summary="기본 프레임 작성.&#10;TODO: 인터페이스 구현체 완료, 예외 처리 구현">
       <option name="closed" value="true" />
@@ -171,7 +171,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729251433166</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update. default method 간소화 및 fetch method를 default method로 구현, 에러핸들링 통합, 인터페이스 및 구현체 리팩토링&#10;TODO: 클래스 다이어그램 등 README 업데이트">
+      <option name="closed" value="true" />
+      <created>1729297983023</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1729297983023</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,6 +211,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="기본 프레임 작성.&#10;TODO: 인터페이스 구현체 완료, 예외 처리 구현" />
     <MESSAGE value="new. 단위테스트 및 통합 테스트 추가, 외부 시스템 변경에 대한 유연성 대처 추가 (properties)&#10;update. interface 로직 변경 및 default method 구현, interface 구현체 구현, checked exception에 대한 해결(재시도) 추가 및 checked &amp; unchecked exception에 대해 로깅&#10;TODO : default method 간소화 및 fetch method를 default method 로 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="new. 단위테스트 및 통합 테스트 추가, 외부 시스템 변경에 대한 유연성 대처 추가 (properties)&#10;update. interface 로직 변경 및 default method 구현, interface 구현체 구현, checked exception에 대한 해결(재시도) 추가 및 checked &amp; unchecked exception에 대해 로깅&#10;TODO : default method 간소화 및 fetch method를 default method 로 구현" />
+    <MESSAGE value="update. default method 간소화 및 fetch method를 default method로 구현, 에러핸들링 통합, 인터페이스 및 구현체 리팩토링&#10;TODO: 클래스 다이어그램 등 README 업데이트" />
+    <option name="LAST_COMMIT_MESSAGE" value="update. default method 간소화 및 fetch method를 default method로 구현, 에러핸들링 통합, 인터페이스 및 구현체 리팩토링&#10;TODO: 클래스 다이어그램 등 README 업데이트" />
   </component>
 </project>

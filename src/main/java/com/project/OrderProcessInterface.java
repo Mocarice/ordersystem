@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public interface OrderProcessInterface<T> {
     final Logger logger = Logger.getLogger(OrderProcessInterface.class.getName());
     // 외부 시스템에서 주문 데이터를 가져오는 메서드
-    default void fetchOrders(String url) throws IOException, InterruptedException{
+    default void fetchOrdersAndSave(String url) throws IOException, InterruptedException{
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = buildFetchOrderRequest(url);
 

@@ -16,9 +16,9 @@ public class OrderService {
         this.orderProcessInterface = orderProcessInterface;
     }
 
-    public void fetchOrdersFromExternal() {
+    public void fetchOrdersFromExternalAndSaveOrders() {
         try{
-            orderProcessInterface.fetchOrders(API_URL);
+            orderProcessInterface.fetchOrdersAndSave(API_URL);
         }catch(Exception e){
             // 에러 핸들링은 try문 내 호출된 메서드에서 처리하므로 출력만 실행.
             logger.info("Exception occured while fetching orders: " + e.getMessage());

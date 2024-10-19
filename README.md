@@ -22,3 +22,22 @@ test project for Humuson
 -
 - 주문정보 객체의 경우 주문 ID는 Long, 나머지는 String 타입으로 전제하고 작성하였습니다.
 - 에러 핸들링의 경우, exception 발생 시 처리 할 수 있다면 처리하고 로깅, 아니라면 로깅처리만 하였습니다.
+
+클래스 다이어그램
+-
+- UML
+![img.png](img.png)
+- OrderProcessInterface
+  - 외부 시스템과 데이터를 동기화(주고 받기)위한 인터페이스
+- ExternalSystemOrderApi
+  - OrderProcessInterface 를 구현한 클래스
+  - 외부 시스템과 HTTP 통신을 통해 주문 데이터를 가져오고 전송합니다.
+  - OrderRepository 객체를 통해 주문 데이터를 저장합니다.
+- OrderService
+  - 주문 데이터의 처리와 외부 시스템과의 통신을 관리하는 서비스 클래스
+  - OrderRepository 와 OrderProcessInterface 를 사용하여 주문 데이터를 외부에서 가져와 내부에 저장, 조회, 외부로 전송하는 역할을 합니다.
+- OrderRepository
+  - 주문 데이터를 메모리에 저장하고 관리하는 클래스
+  - 주문 데이터의 CRUD 를 담당합니다.
+- Order
+  - 주문 데이터의 정보를 담는 클래스

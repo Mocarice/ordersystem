@@ -43,7 +43,7 @@ class ExternalOrderApiTest {
                         .withBody("[{\"orderId\": 1, \"customerName\": \"최승환\", \"orderDate\": \"2024-10-18\", \"orderStatus\": \"처리 중\"}]")));
 
 
-        externalSystemOrderAPI.fetchOrders(url); // 가짜 서버에서 데이터 가져오기
+        externalSystemOrderAPI.fetchOrdersAndSave(url); // 가짜 서버에서 데이터 가져오기
 
         List<Order> orders = orderRepository.getAllOrders();
         assertEquals(1, orders.size());

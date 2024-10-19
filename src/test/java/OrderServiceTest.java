@@ -26,11 +26,11 @@ class OrderServiceTest {
     @Test
     void testFetchOrdersFromExternal() throws Exception {
         Order order = new Order(1L, "최승환", "2024-10-18", "처리 중");
-        doNothing().when(orderProcessInterface).fetchOrders(anyString()); // 외부 시스템에서 데이터 가져오는 작업을 모킹
+        doNothing().when(orderProcessInterface).fetchOrdersAndSave(anyString()); // 외부 시스템에서 데이터 가져오는 작업을 모킹
 
-        orderService.fetchOrdersFromExternal();
+        orderService.fetchOrdersFromExternalAndSaveOrders();
 
-        verify(orderProcessInterface, times(1)).fetchOrders(anyString()); // 외부 시스템과의 연동이 한 번 실행됐는지 확인
+        verify(orderProcessInterface, times(1)).fetchOrdersAndSave(anyString()); // 외부 시스템과의 연동이 한 번 실행됐는지 확인
     }
 
     @Test

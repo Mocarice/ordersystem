@@ -10,7 +10,7 @@ public class Main {
         OrderService orderService = new OrderService(orderRepository, orderProcessInterface);
 
         // 외부 시스템에서 주문 데이터 동기화
-        orderService.fetchOrdersFromExternal();
+        orderService.fetchOrdersFromExternalAndSaveOrders();
 
         // 모든 주문 데이터 출력
         for (Order order : orderService.getAllOrders()) {
