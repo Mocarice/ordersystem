@@ -1,7 +1,6 @@
 package com.project;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -12,48 +11,91 @@ import java.util.logging.Logger;
 public interface OrderProcessInterface<T> {
     final Logger logger = Logger.getLogger(OrderProcessInterface.class.getName());
     // 외부 시스템에서 주문 데이터를 가져오는 메서드
-    void fetchOrders(String url) throws IOException, InterruptedException;
+    default void fetchOrders(String url) throws IOException, InterruptedException{
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = buildFetchOrderRequest(url);
+
+        int retryCount = retryCount();
+        // 재시도 횟수 총 {retryCount}회
+        for(int attempt = 0; attempt < retryCount; attempt++) {
+            try{
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                if(response.statusCode() == 200) {
+                    handleSuccessFetchOrderResponse(response);
+                    return;
+                }else{
+                    throw new RuntimeException("Failed to fetch orders. HTTP Status: " + response.statusCode() + ", Response Body: " + response.body());
+                }
+            }catch (IOException | RuntimeException e) {
+                logger.info("Attempt " + attempt + ", failed: " + e.getMessage());
+            }catch (InterruptedException ie){
+                Thread.currentThread().interrupt();
+                logger.info("InterruptedException occured while retrying: " + ie.getMessage());
+                throw ie;
+            }catch (Exception e) {
+                logger.info("An unexpected error occurred while retrying: " + e.getMessage());
+                throw e;
+            }
+            retrySleep();
+        }
+        logger.info("Failed to fetch orders after " + retryCount + " attempts.");
+        throw new RuntimeException("Failed to fetch orders.");
+    }
     // 주문 데이터를 외부 시스템으로 전송하는 메서드
     default void sendOrders(List<T> orders, String url) throws IOException, InterruptedException{
         HttpClient client = HttpClient.newHttpClient();
         String jsonOrders = buildJsonFromOrder(orders); // 주문 리스트를 JSON 형식으로 변환
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(jsonOrders))
-                .build();
-        int retryCount = 5;
-        int attempt = 0;
+        HttpRequest request = buildSendOrderRequest(url, jsonOrders);
+        int retryCount = retryCount();
         // 재시도 횟수 총 {retryCount}회
-        while(attempt < retryCount) {
+        for(int attempt = 0; attempt < retryCount; attempt++) {
             try {
-                attempt++;
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-                if (response.statusCode() != 200) {
-                    throw new RuntimeException("Failed to send orders. HTTP Status: " + response.statusCode());
+                if(response.statusCode() == 200) {
+                    handleSuccessSendOrderResponse(response);
+                    return;
+                }else{
+                    throw new RuntimeException("Failed to send orders. HTTP Status: " + response.statusCode() + ", Response Body: " + response.body());
                 }
             }catch (IOException | RuntimeException e) {
                 logger.info("Attempt " + attempt + ", failed: " + e.getMessage());
-                //재시도 횟수 {retryCount}회가 넘어가면 종료
-                if(attempt >= retryCount) {
-                    logger.info("Failed to send orders after " + retryCount + " attempts.");
-                }
-                try {
-                    Thread.sleep(1000);  // 1초 대기
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                    logger.info("InterruptedException occured while retrying: " + ie.getMessage());
-                }
             }catch (InterruptedException ie){
                 Thread.currentThread().interrupt();
                 logger.info("InterruptedException occured while retrying: " + ie.getMessage());
+                throw ie;
             }catch (Exception e) {
                 logger.info("An unexpected error occurred while retrying: " + e.getMessage());
+                throw e;
             }
+            retrySleep();
+        }
+        logger.info("Failed to send orders after " + retryCount + " attempts.");
+        throw new RuntimeException("Failed to send orders.");
+
+    }
+    HttpRequest buildFetchOrderRequest(String url);
+    HttpRequest buildSendOrderRequest(String url, String jsonOrders);
+    // FetchOrderResponse의 Status가 200일 경우 처리
+    void handleSuccessFetchOrderResponse(HttpResponse<String> response);
+    // SendOrderResponse의 Status가 200일 경우 처리
+    void handleSuccessSendOrderResponse(HttpResponse<String> response);
+
+    // 재시도 횟수
+    default int retryCount(){
+        return 5;
+    }
+    // 재시도 시, 대기 시간
+    default void retrySleep() throws InterruptedException{
+        try{
+            Thread.sleep(1000);
+        }catch (InterruptedException ie){
+            Thread.currentThread().interrupt();
+            logger.info("InterruptedException occured while retrying: " + ie.getMessage());
+            throw ie;
         }
     }
+
     // JSON 배열을 주문 리스트로 변환하는 메서드
     default List<T> parseOrdersFromJsonArray(String jsonData) {
         jsonData = jsonData.trim();

@@ -1,78 +1,20 @@
 package com.project;
 
-import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class ExternalSystemOrderApi implements OrderProcessInterface<Order> {
 
     private final OrderRepository orderRepository;
-    private final Logger logger = Logger.getLogger(ExternalSystemOrderApi.class.getName());
     public ExternalSystemOrderApi(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
-    // 외부 시스템에서 주문 데이터를 가져오는 메서드 (HTTP GET)
-    @Override
-    public void fetchOrders(String url) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .GET()
-                .build();
-
-        int retryCount = 5;
-        int attempt = 0;
-        // HTTP 요청 보내기, 재시도 횟수 총 {retryCount}회
-        while(attempt < retryCount) {
-            try{
-                attempt++;
-                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                // 응답이 성공적일 때만 처리
-                if (response.statusCode() == 200) {
-                    String jsonData = response.body();
-                    // JSON이 배열인지 객체인지 확인
-                    if (isJsonArray(jsonData)) {
-                        List<Order> orders = parseOrdersFromJsonArray(jsonData);
-                        orders.forEach(orderRepository::saveOrder);
-                    } else if (isJsonObject(jsonData)) {
-                        Order order = parseOrderFromJsonObject(jsonData);
-                        orderRepository.saveOrder(order);
-                    } else {    // JSON 형태 이상
-                        throw new IllegalArgumentException("Invalid JSON format");
-                    }
-                } else {
-                    throw new RuntimeException("Failed to fetch orders. HTTP Status: " + response.statusCode() + ", Response Body: " + response.body());
-                }
-            }catch (IOException | RuntimeException e) {
-                logger.info("Attempt " + attempt + ", failed: " + e.getMessage());
-
-                //재시도 횟수 {retryCount}회가 넘어가면 종료
-                if(attempt >= retryCount) {
-                    logger.info("Failed to fetch orders after " + retryCount + " attempts.");
-                }
-                try {
-                    Thread.sleep(1000);  // 1초 대기
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                    logger.info("InterruptedException occured while retrying: " + ie.getMessage());
-                }
-            }catch (InterruptedException ie){
-                Thread.currentThread().interrupt();
-                logger.info("InterruptedException occured while fetching order: " + ie.getMessage());
-            }catch (Exception e) {
-                logger.info("An unexpected error occurred while fetching order: " + e.getMessage());
-            }
-        }
-    }
     @Override
     public Order parseOrderFromJsonObject(String jsonData) {
         jsonData = jsonData.trim();
-
         // 중괄호 제거
         if (jsonData.startsWith("{") && jsonData.endsWith("}")) {
             jsonData = jsonData.substring(1, jsonData.length() - 1);
@@ -104,6 +46,40 @@ public class ExternalSystemOrderApi implements OrderProcessInterface<Order> {
         }
         // Order 객체 생성 및 반환
         return new Order(orderId, customerName, orderDate, orderStatus);
+    }
+    @Override
+    public HttpRequest buildFetchOrderRequest(String url) {
+        return HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+    }
+    @Override
+    public HttpRequest buildSendOrderRequest(String url, String jsonOrders) {
+        return HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonOrders))
+                .build();
+    }
+    @Override
+    public void handleSuccessSendOrderResponse(HttpResponse<String> response) {
+        // SendOrderResponse의 Status가 200일 경우 처리 로직 별도 작성
+        // 현 프로젝트에선 별도의 처리가 필요 없음.
+    }
+    @Override
+    public void handleSuccessFetchOrderResponse(HttpResponse<String> response) {
+        String jsonData = response.body();
+        // JSON이 배열인지 객체인지 확인
+        if (isJsonArray(jsonData)) {
+            List<Order> orders = parseOrdersFromJsonArray(jsonData);
+            orders.forEach(orderRepository::saveOrder);
+        } else if (isJsonObject(jsonData)) {
+            Order order = parseOrderFromJsonObject(jsonData);
+            orderRepository.saveOrder(order);
+        } else {    // JSON 형태 이상
+            throw new IllegalArgumentException("Invalid JSON format");
+        }
     }
 
     @Override

@@ -4,20 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e5b631f-c39b-480d-85d3-12cc999b5cf3" name="Changes" comment="기본 프레임 작성.&#10;TODO: 인터페이스 구현체 완료, 예외 처리 구현">
-      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="6e5b631f-c39b-480d-85d3-12cc999b5cf3" name="Changes" comment="new. 단위테스트 및 통합 테스트 추가, 외부 시스템 변경에 대한 유연성 대처 추가 (properties)&#10;update. interface 로직 변경 및 default method 구현, interface 구현체 구현, checked exception에 대한 해결(재시도) 추가 및 checked &amp; unchecked exception에 대해 로깅&#10;TODO : default method 간소화 및 fetch method를 default method 로 구현">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/ExternalSystemOrderApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/ExternalSystemOrderApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/JsonTypeChecker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/OrderProcessException.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/OrderProcessInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/OrderProcessInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/OrderRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/OrderStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/OrderServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/OrderServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +25,37 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ordersystem" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ordersystem" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ordersystem" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -74,7 +102,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/hwan5/Desktop/JavaProject/crackmarket",
+    "last_opened_file_path": "C:/Users/hwan5/Desktop/JavaProject/ordersystem",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -124,7 +152,8 @@
       <option name="presentableId" value="Default" />
       <updated>1729143841211</updated>
       <workItem from="1729143842437" duration="7455000" />
-      <workItem from="1729226875672" duration="15595000" />
+      <workItem from="1729226875672" duration="16760000" />
+      <workItem from="1729287399586" duration="10009000" />
     </task>
     <task id="LOCAL-00001" summary="기본 프레임 작성.&#10;TODO: 인터페이스 구현체 완료, 예외 처리 구현">
       <option name="closed" value="true" />
@@ -134,7 +163,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729160937059</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="new. 단위테스트 및 통합 테스트 추가, 외부 시스템 변경에 대한 유연성 대처 추가 (properties)&#10;update. interface 로직 변경 및 default method 구현, interface 구현체 구현, checked exception에 대한 해결(재시도) 추가 및 checked &amp; unchecked exception에 대해 로깅&#10;TODO : default method 간소화 및 fetch method를 default method 로 구현">
+      <option name="closed" value="true" />
+      <created>1729251433166</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1729251433166</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,7 +182,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -153,6 +202,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="기본 프레임 작성.&#10;TODO: 인터페이스 구현체 완료, 예외 처리 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="기본 프레임 작성.&#10;TODO: 인터페이스 구현체 완료, 예외 처리 구현" />
+    <MESSAGE value="new. 단위테스트 및 통합 테스트 추가, 외부 시스템 변경에 대한 유연성 대처 추가 (properties)&#10;update. interface 로직 변경 및 default method 구현, interface 구현체 구현, checked exception에 대한 해결(재시도) 추가 및 checked &amp; unchecked exception에 대해 로깅&#10;TODO : default method 간소화 및 fetch method를 default method 로 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="new. 단위테스트 및 통합 테스트 추가, 외부 시스템 변경에 대한 유연성 대처 추가 (properties)&#10;update. interface 로직 변경 및 default method 구현, interface 구현체 구현, checked exception에 대한 해결(재시도) 추가 및 checked &amp; unchecked exception에 대해 로깅&#10;TODO : default method 간소화 및 fetch method를 default method 로 구현" />
   </component>
 </project>

@@ -1,7 +1,5 @@
 package com.project;
 
-import java.time.LocalDate;
-
 public class Order {
     private final Long orderId;
     private final String customerName;

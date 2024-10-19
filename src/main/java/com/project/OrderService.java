@@ -1,11 +1,12 @@
 package com.project;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
+
 public class OrderService {
     private static final String API_URL = Config.getProperty("external.api.url.test1"); // 외부 API URL
+    private final Logger logger = Logger.getLogger(OrderService.class.getName());
 
     private final OrderRepository orderRepository;
     private final OrderProcessInterface<Order> orderProcessInterface;
@@ -16,10 +17,11 @@ public class OrderService {
     }
 
     public void fetchOrdersFromExternal() {
-        try {
+        try{
             orderProcessInterface.fetchOrders(API_URL);
-        } catch (Exception e) {
-            Logger.getLogger("OrderService").info("Error fetching orders: " + e.getMessage());
+        }catch(Exception e){
+            // 에러 핸들링은 try문 내 호출된 메서드에서 처리하므로 출력만 실행.
+            logger.info("Exception occured while fetching orders: " + e.getMessage());
         }
     }
 
@@ -32,11 +34,12 @@ public class OrderService {
     }
 
     public void sendOrdersToExternal() {
-        try {
-            List<Order> orders = orderRepository.getAllOrders();
+        List<Order> orders = orderRepository.getAllOrders();
+        try{
             orderProcessInterface.sendOrders(orders, API_URL);
-        } catch (Exception e) {
-            Logger.getLogger("OrderService").info("Error sending orders: " + e.getMessage());
+        }catch(Exception e){
+            // 에러 핸들링은 try문 내 호출된 메서드에서 처리하므로 출력만 실행.
+            logger.info("Exception occured while sending orders: " + e.getMessage());
         }
     }
 }
